@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FurniTex - Bosh sahifa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- CSS fayliga havola -->
+    <link rel="stylesheet" href="/static/css/home.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">FurniTex</div>
+    <div class="search-bar">
+        <input type="text" placeholder="Qidiruv..." />
+    </div>
+    <div class="nav-icons">
+        <a th:href="@{/cart}">🛒 Savat</a>
+        <a th:href="@{/login}">Kirish</a>
+        <a th:href="@{/register}">Ro'yxatdan o'tish</a>
+    </div>
+</header>
+
+<div class="hero">
+    <h1>Yangi Mahsulotlar To'plami</h1>
+    <p>Eng so‘nggi va sifatli mahsulotlarimizni xarid qiling</p>
+    <a th:href="@{/products}"><button>Hozir xarid qilish</button></a>
+</div>
+
+<section class="products">
+    <div class="section-title">Tavsiya etilgan mahsulotlar</div>
+    <div class="product-grid">
+        <!-- Baza ma'lumotlari bo'yicha mahsulotlarni ko'rsatish -->
+        <div th:each="product : ${products}" class="product-card">
+            <img th:src="${product.imageUrl}" th:alt="${product.name}" />
+            <h3 th:text="${product.name}">Mahsulot nomi</h3>
+            <p th:text="${product.price} + ' so‘m'">Narx</p>
+            <button>Savatga</button>
+        </div>
+    </div>
+</section>
+
+<section class="categories">
+    <div class="section-title">Kategoriyalar</div>
+    <div class="category-grid">
+        <div>
+            <img src="https://via.placeholder.com/100" alt="Elektronika" />
+            <div>Elektronika</div>
+        </div>
+        <div>
+            <img src="https://via.placeholder.com/100" alt="Kiyimlar" />
+            <div>Kiyimlar</div>
+        </div>
+        <div>
+            <img src="https://via.placeholder.com/100" alt="O‘yinchoqlar" />
+            <div>O‘yinchoqlar</div>
+        </div>
+        <div>
+            <img src="https://via.placeholder.com/100" alt="Uchish uchun" />
+            <div>Uchish uchun</div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-section">
+        <h4>Biz haqimizda</h4>
+        <a href="#">Kompaniya haqida</a>
+        <a href="#">Ish o‘rinlari</a>
+    </div>
+    <div class="footer-section">
+        <h4>Aloqa</h4>
+        <a href="#">support@example.com</a>
+        <a href="#">+998 95 195 00 94</a>
+    </div>
+    <div class="footer-section">
+        <h4>Ijtimoiy tarmoqlar</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Telegram</a>
+    </div>
+</footer>
+
+<script src="/static/js/home.js"></script>
+
+</body>
+</html>
