@@ -3,85 +3,292 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FurniTex - Bosh sahifa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <!-- CSS fayliga havola -->
+    <title>FurniTex - Mebel va Uy Ro'zg'or Buyumlari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/static/css/home.css">
 </head>
 <body>
 
-<header>
-    <div class="logo">FurniTex</div>
-    <div class="search-bar">
-        <input type="text" placeholder="Qidiruv..." />
-    </div>
-    <div class="nav-icons">
-        <a th:href="@{/cart}">🛒 Savat</a>
-        <a th:href="@{/login}">Kirish</a>
-        <a th:href="@{/register}">Ro'yxatdan o'tish</a>
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-couch"></i>
+            <span>FurniTex</span>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Mahsulotlarni qidirish..." />
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <nav class="nav-icons">
+            <a th:href="@{/wishlist}" class="nav-icon">
+                <i class="far fa-heart"></i>
+                <span>Saralangan</span>
+            </a>
+            <a th:href="@{/cart}" class="nav-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Savat</span>
+                <span class="cart-count">0</span>
+            </a>
+            <div class="user-dropdown">
+                <button class="user-btn">
+                    <i class="far fa-user"></i>
+                    <span>Hisobim</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Kirish</a>
+                    <a th:href="@{/register}"><i class="fas fa-user-plus"></i> Ro'yxatdan o'tish</a>
+                    <a th:href="@{/account}"><i class="fas fa-user-cog"></i> Shaxsiy kabinet</a>
+                </div>
+            </div>
+        </nav>
     </div>
 </header>
 
-<div class="hero">
-    <h1>Yangi Mahsulotlar To'plami</h1>
-    <p>Eng so‘nggi va sifatli mahsulotlarimizni xarid qiling</p>
-    <a th:href="@{/products}"><button>Hozir xarid qilish</button></a>
-</div>
+<main>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Uyingiz uchun ajoyib mebel to'plami</h1>
+            <p>Zamonaviy dizayn, qulaylik va uzoq muddatli ishlash - barchasi bir joyda</p>
+            <div class="hero-buttons">
+                <a th:href="@{/products}" class="btn-primary">
+                    <i class="fas fa-shopping-bag"></i> Hozir xarid qilish
+                </a>
+                <a th:href="@{/collections}" class="btn-secondary">
+                    <i class="fas fa-eye"></i> Koleksiyalarni ko'rish
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc" alt="Zamonaviy mebel to'plami" />
+        </div>
+    </section>
 
-<section class="products">
-    <div class="section-title">Tavsiya etilgan mahsulotlar</div>
-    <div class="product-grid">
-        <!-- Baza ma'lumotlari bo'yicha mahsulotlarni ko'rsatish -->
-        <div th:each="product : ${products}" class="product-card">
-            <img th:src="${product.imageUrl}" th:alt="${product.name}" />
-            <h3 th:text="${product.name}">Mahsulot nomi</h3>
-            <p th:text="${product.price} + ' so‘m'">Narx</p>
-            <button>Savatga</button>
+    <section class="features-section">
+        <div class="feature-card">
+            <i class="fas fa-truck"></i>
+            <h3>Tez yetkazib berish</h3>
+            <p>3 kun ichida Toshkent bo'ylab bepul yetkazib berish</p>
         </div>
-    </div>
-</section>
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Kafolat</h3>
+            <p>Barcha mahsulotlarimiz 2 yilgacha kafolat bilan</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-headset"></i>
+            <h3>24/7 Qo'llab-quvvatlash</h3>
+            <p>Har qanday savol uchun mutaxassislarimiz doimo tayyor</p>
+        </div>
+    </section>
 
-<section class="categories">
-    <div class="section-title">Kategoriyalar</div>
-    <div class="category-grid">
-        <div>
-            <img src="https://via.placeholder.com/100" alt="Elektronika" />
-            <div>Elektronika</div>
+    <section class="products-section">
+        <div class="section-header">
+            <h2 class="section-title">Tavsiya etilgan mahsulotlar</h2>
+            <a th:href="@{/products}" class="view-all">
+                Hammasini ko'rish <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
-        <div>
-            <img src="https://via.placeholder.com/100" alt="Kiyimlar" />
-            <div>Kiyimlar</div>
-        </div>
-        <div>
-            <img src="https://via.placeholder.com/100" alt="O‘yinchoqlar" />
-            <div>O‘yinchoqlar</div>
-        </div>
-        <div>
-            <img src="https://via.placeholder.com/100" alt="Uchish uchun" />
-            <div>Uchish uchun</div>
-        </div>
-    </div>
-</section>
 
-<footer class="footer">
-    <div class="footer-section">
-        <h4>Biz haqimizda</h4>
-        <a href="#">Kompaniya haqida</a>
-        <a href="#">Ish o‘rinlari</a>
+        <div class="product-grid">
+            <div th:each="product : ${products}" class="product-card">
+                <div class="product-badge" th:if="${product.discount > 0}">
+                    <span th:text="'-' + ${product.discount} + '%'">-20%</span>
+                </div>
+                <div class="product-image">
+                    <img th:src="${product.imageUrl}" th:alt="${product.name}" />
+                    <div class="product-actions">
+                        <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 th:text="${product.name}">Mahsulot nomi</h3>
+                    <div class="product-price">
+                        <span class="current-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' so'm'">1 200 000 so'm</span>
+                        <span class="old-price" th:if="${product.oldPrice > 0}" th:text="${#numbers.formatDecimal(product.oldPrice, 0, 'COMMA', 0, 'POINT')} + ' so'm'">1 500 000 so'm</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-cart-plus"></i> Savatga qo'shish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-section">
+        <h2 class="section-title">Kategoriyalar</h2>
+        <div class="category-grid">
+            <a th:href="@{/category/living-room}" class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-couch"></i>
+                </div>
+                <h3>Mehmonxona mebellari</h3>
+                <p th:text="${categoryCounts.livingRoom} + '+ mahsulot'">50+ mahsulot</p>
+            </a>
+            <a th:href="@{/category/bedroom}" class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <h3>Yotoq xona mebellari</h3>
+                <p th:text="${categoryCounts.bedroom} + '+ mahsulot'">35+ mahsulot</p>
+            </a>
+            <a th:href="@{/category/kitchen}" class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3>Oshxona mebellari</h3>
+                <p th:text="${categoryCounts.kitchen} + '+ mahsulot'">40+ mahsulot</p>
+            </a>
+            <a th:href="@{/category/office}" class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-chair-office"></i>
+                </div>
+                <h3>Ofis mebellari</h3>
+                <p th:text="${categoryCounts.office} + '+ mahsulot'">25+ mahsulot</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="banner-section">
+        <div class="banner-content">
+            <h2>Yozgi chegirmalar</h2>
+            <p>Tanlangan mebellarda 30% gacha chegirma</p>
+            <a th:href="@{/summer-sale}" class="btn-primary">
+                <i class="fas fa-fire"></i> Chegirmalarni ko'rish
+            </a>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <h2 class="section-title">Mijozlarimiz fikrlari</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                    "FurniTex-dan mehmonxona uchun divan sotib oldim. Juda sifatli va qulay. Yetkazib berish ham o'z vaqtida bo'ldi."
+                </p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dilfuza Rahimova" />
+                    <div>
+                        <h4>Dilfuza Rahimova</h4>
+                        <span>Toshkent</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="testimonial-text">
+                    "Yotoq xonam uchun to'plam sotib oldim. Dizayn va sifat juda zo'r. Xarid qilganimdan xursandman."
+                </p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Javlon Sobirov" />
+                    <div>
+                        <h4>Javlon Sobirov</h4>
+                        <span>Samarqand</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <div class="footer-logo">
+                <i class="fas fa-couch"></i>
+                <span>FurniTex</span>
+            </div>
+            <p class="footer-about">
+                FurniTex - bu zamonaviy va qulay mebellarni ishlab chiqaruvchi kompaniya. Biz mijozlarimizga eng yaxshi sifat va dizaynni taklif qilamiz.
+            </p>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h4 class="footer-title">Ma'lumot</h4>
+            <ul class="footer-links">
+                <li><a th:href="@{/about}"><i class="fas fa-chevron-right"></i> Biz haqimizda</a></li>
+                <li><a th:href="@{/products}"><i class="fas fa-chevron-right"></i> Mahsulotlar</a></li>
+                <li><a th:href="@{/discounts}"><i class="fas fa-chevron-right"></i> Chegirmalar</a></li>
+                <li><a th:href="@{/news}"><i class="fas fa-chevron-right"></i> Yangiliklar</a></li>
+                <li><a th:href="@{/contact}"><i class="fas fa-chevron-right"></i> Aloqa</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4 class="footer-title">Mijozlar uchun</h4>
+            <ul class="footer-links">
+                <li><a th:href="@{/account}"><i class="fas fa-chevron-right"></i> Mening hisobim</a></li>
+                <li><a th:href="@{/orders}"><i class="fas fa-chevron-right"></i> Buyurtmalar tarixi</a></li>
+                <li><a th:href="@{/cart}"><i class="fas fa-chevron-right"></i> Savat</a></li>
+                <li><a th:href="@{/wishlist}"><i class="fas fa-chevron-right"></i> Xaridlar</a></li>
+                <li><a th:href="@{/help}"><i class="fas fa-chevron-right"></i> Yordam</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4 class="footer-title">Aloqa</h4>
+            <ul class="footer-contact">
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Toshkent shahar, Yunusobod tumani, Navoiy ko'chasi 45</span>
+                </li>
+                <li>
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+998 95 195 00 94</span>
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    <span>support@furnitex.uz</span>
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    <span>Dushanba - Juma, 9:00 - 18:00</span>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="footer-section">
-        <h4>Aloqa</h4>
-        <a href="#">support@example.com</a>
-        <a href="#">+998 95 195 00 94</a>
-    </div>
-    <div class="footer-section">
-        <h4>Ijtimoiy tarmoqlar</h4>
-        <a href="#">Instagram</a>
-        <a href="#">Telegram</a>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p>&copy; 2023 FurniTex. Barcha huquqlar himoyalangan.</p>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+        </div>
     </div>
 </footer>
 
-<script src="/js/home.js"></script>
+<script src="/static/js/home.js"></script>
 
 </body>
 </html>
