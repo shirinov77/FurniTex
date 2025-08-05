@@ -53,14 +53,6 @@ public class CartService {
     }
 
     /**
-     * ID bo'yicha savatni o'chirish.
-     * @param id savat IDsi
-     */
-    public void deleteById(Long id) {
-        cartRepository.deleteById(id);
-    }
-
-    /**
      * Foydalanuvchi IDsi bo'yicha savatdagi barcha mahsulotlarni olish.
      * @param userId foydalanuvchi IDsi
      * @return savatdagi mahsulotlar ro'yxati
@@ -72,28 +64,27 @@ public class CartService {
     }
 
     /**
-     * Foydalanuvchi savatining umumiy narxini hisoblash.
+     * Savatning umumiy narxini hisoblash.
      * @param userId foydalanuvchi IDsi
      * @return umumiy narx
      */
     public Double getTotal(Long userId) {
-        return getCartItems(userId).stream()
-                .mapToDouble(Cart::getTotalPrice)
+        List<Cart> cartItems = getCartItems(userId);
+        return cartItems.stream()
+                .mapToDouble(cartItem -> cartItem.getProduct().getPrice() * cartItem.getQuantity())
                 .sum();
     }
 
     /**
-     * Mahsulotni foydalanuvchi savatiga qo'shish.
-     * Agar mahsulot allaqachon savatda bo'lsa, miqdorini oshiradi.
+     * Mahsulotni savatga qo'shish. Agar mahsulot allaqachon mavjud bo'lsa, miqdorini oshiradi.
      * @param userId foydalanuvchi IDsi
      * @param productId mahsulot IDsi
      */
     public void addProductToCart(Long userId, Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Mahsulot topilmadi"));
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Foydalanuvchi topilmadi"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Mahsulot topilmadi"));
 
         Optional<Cart> existingCartItem = cartRepository.findByUserAndProduct(user, product);
         if (existingCartItem.isPresent()) {
@@ -101,16 +92,16 @@ public class CartService {
             cart.setQuantity(cart.getQuantity() + 1);
             cartRepository.save(cart);
         } else {
-            Cart cart = new Cart();
-            cart.setUser(user);
-            cart.setProduct(product);
-            cart.setQuantity(1);
-            cartRepository.save(cart);
+            Cart newCartItem = new Cart();
+            newCartItem.setUser(user);
+            newCartItem.setProduct(product);
+            newCartItem.setQuantity(1);
+            cartRepository.save(newCartItem);
         }
     }
 
     /**
-     * Mahsulotni savatdan o'chirish.
+     * Savatdan mahsulotni o'chirish.
      * @param userId foydalanuvchi IDsi
      * @param productId mahsulot IDsi
      */

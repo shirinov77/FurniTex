@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -41,19 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm(@RequestParam(value = "success", required = false) String success,
-                                @RequestParam(value = "logout", required = false) String logout,
-                                @RequestParam(value = "error", required = false) String error,
-                                Model model) {
-        if (success != null) {
-            model.addAttribute("success", success);
-        }
-        if (logout != null) {
-            model.addAttribute("logout", "Tizimdan muvaffaqiyatli chiqdingiz.");
-        }
-        if (error != null) {
-            model.addAttribute("error", error);
-        }
+    public String showLoginForm() {
         return "user/login"; // templates/user/login.html
     }
 
@@ -61,11 +48,8 @@ public class UserController {
     public String viewProfile(Model model) {
         try {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            if (username == null || username.equals("anonymousUser")) {
-                return "redirect:/user/login?error=Tizimga kiring!";
-            }
-            User currentUser = userService.findByUsername(username);
-            model.addAttribute("user", currentUser);
+            User user = userService.findByUsername(username);
+            model.addAttribute("user", user);
             return "user/profile"; // templates/user/profile.html
         } catch (Exception e) {
             model.addAttribute("error", "Profilni yuklashda xatolik: " + e.getMessage());

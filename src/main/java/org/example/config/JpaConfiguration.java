@@ -41,8 +41,8 @@ public class JpaConfiguration {
     }
 
     /**
-     * Entity sinflarini skanerlash va jadvallarni yaratish uchun EntityManagerFactory obyektini yaratadi.
-     * Bu yerda "org.example.model" paketi entity sinflari uchun skanerlanadi.
+     * JPA (Java Persistence API) uchun EntityManagerFactory yaratadi.
+     * Bu JPA ning asosiy obyektidir va ma'lumotlar bazasi bilan ishlash uchun kerak.
      */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

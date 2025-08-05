@@ -1,10 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FurniTex | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --gray-light: #e5e7eb;
+            --gray-medium: #6b7280;
+            --turquoise: #14b8a6;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            width: 400px;
+            max-width: 90%;
+            padding: 2rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.05);
+            background-color: white;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+            color: var(--gray-medium);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            outline: none;
+            transition: box-shadow 0.3s;
+        }
+
+        .form-group input:focus {
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--turquoise);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.2s;
+        }
+
+        .login-button:hover {
+            background-color: #0d9488; /* darker turquoise */
+        }
+
+        .login-links {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .login-links a {
+            color: var(--turquoise);
+            text-decoration: none;
+        }
+
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
 </head>
 <body>
+
+<div class="login-container">
+    <h2>Kirish</h2>
+    <form action="/login" method="POST">
+        <div class="form-group">
+            <label for="email">Email manzil</label>
+            <input type="email" id="email" name="email" placeholder="example@mail.com" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Parol</label>
+            <input type="password" id="password" name="password" placeholder="********" required />
+        </div>
+        <button type="submit" class="login-button">Kirish</button>
+    </form>
+    <div class="login-links">
+        <p><a href="/forgot-password">Parolni unutdingizmi?</a></p>
+        <p>Hisobingiz yo‘qmi? <a href="/register">Ro‘yxatdan o‘tish</a></p>
+    </div>
+</div>
 
 </body>
 </html>

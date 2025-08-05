@@ -30,20 +30,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Faqat ADMIN roli bo'lgan foydalanuvchilar "/admin/**" URL'lariga kirishi mumkin.
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        // Ro'yxatdan o'tish, kirish, bosh sahifa, mahsulotlar sahifasiga barcha kirishi mumkin.
-                        .requestMatchers("/user/register", "/user/login", "/home", "/products", "/").permitAll()
-                        // Boshqa barcha URL'larga kirish uchun foydalanuvchi tizimga kirgan bo'lishi kerak.
-                        .anyRequest().authenticated()
+                        // Faqat tizimga kirgan (authenticated) foydalanuvchilar "/user/**" URL'lariga kirishi mumkin.
+                        .requestMatchers("/user/**", "/cart/**", "/order/**").authenticated()
+                        // Boshqa barcha URL'larga hamma ruxsat etilgan.
+                        .anyRequest().permitAll()
                 )
-                // Forma orqali kirishni sozlaymiz.
+                // Formali kirishni sozlaymiz.
                 .formLogin(form -> form
                         // Kirish sahifasining URL'i.
                         .loginPage("/user/login")
-                        // Kirish ma'lumotlarini qabul qiluvchi URL.
-                        .loginProcessingUrl("/login")
-                        // Muvaffaqiyatli kirishdan so'ng foydalanuvchini yo'naltiruvchi sahifa.
+                        // Kirish muvaffaqiyatli bo'lgandan so'ng yo'naltiriladigan sahifa.
                         .defaultSuccessUrl("/home", true)
-                        // Kirish sahifasiga hamma kirishi mumkin.
+                        // Kirishga ruxsat berish.
                         .permitAll()
                 )
                 // Tizimdan chiqishni sozlaymiz.

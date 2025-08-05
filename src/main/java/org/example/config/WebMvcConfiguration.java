@@ -31,35 +31,35 @@ import org.thymeleaf.templatemode.TemplateMode;
 @PropertySource("classpath:application.properties")
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    private final ApplicationContext applicationContext;
-    private final Environment env;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Autowired
-    public WebMvcConfiguration(ApplicationContext applicationContext, Environment env) {
-        this.applicationContext = applicationContext;
-        this.env = env;
-    }
+    private Environment env;
 
+    // Thymeleaf shablonlarini topish va ishlash uchun sozlash.
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(this.applicationContext);
+        templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("classpath:/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCacheable(false);
+        templateResolver.setCacheable(true);
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
 
+    // Thymeleaf shablon motorini sozlash.
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.setEnableSpringELCompiler(true); // Spring ELni yoqish
+        templateEngine.setEnableSpringELCompiler(true);
         return templateEngine;
     }
 
+    // Thymeleaf ko'rish hal qiluvchisini sozlash.
     @Bean
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();

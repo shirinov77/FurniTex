@@ -63,7 +63,10 @@ public class AdminController {
     @GetMapping("/categories/edit/{id}")
     public String editCategoryForm(@PathVariable Long id, Model model) {
         Optional<Category> category = categoryService.findById(id);
-        model.addAttribute("category", category);
+        if (category.isEmpty()) {
+            return "redirect:/admin/categories";
+        }
+        model.addAttribute("category", category.get());
         return "admin/edit-category";
     }
 
@@ -94,9 +97,9 @@ public class AdminController {
 
     @GetMapping("/products/add")
     public String addProductForm(Model model) {
-        List<Category> categories = categoryService.findAll();
         model.addAttribute("product", new Product());
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("users", userService.findAll()); // Sotuvchi ro'yxati
         return "admin/add-product";
     }
 
@@ -104,6 +107,7 @@ public class AdminController {
     public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("users", userService.findAll());
             return "admin/add-product";
         }
         productService.save(product);
@@ -112,7 +116,7 @@ public class AdminController {
 
     @GetMapping("/products/edit/{id}")
     public String editProductForm(@PathVariable Long id, Model model) {
-        Optional<Product> product = productService.findById(id);
+        Product product = productService.findById(id).orElseThrow(() -> new RuntimeException("Mahsulot topilmadi"));
         List<Category> categories = categoryService.findAll();
         model.addAttribute("product", product);
         model.addAttribute("categories", categories);

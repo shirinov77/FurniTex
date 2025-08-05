@@ -55,7 +55,7 @@ public class ProductService {
 
     /**
      * Barcha mahsulotlarni olish.
-     * @return barcha mahsulotlar ro'yxati
+     * @return mahsulotlar ro'yxati
      */
     public List<Product> getAllProducts() {
         return productRepository.findAll();

@@ -51,14 +51,14 @@ public class OrderService {
     /**
      * ID bo'yicha buyurtmani topish.
      * @param id buyurtma IDsi
-     * @return buyurtma obyekti
+     * @return buyurtma obyekti (Optional)
      */
     public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
     }
 
     /**
-     * ID bo'yicha o'chirish.
+     * ID bo'yicha buyurtmani o'chirish.
      * @param id o'chiriladigan buyurtma IDsi
      */
     public void deleteById(Long id) {

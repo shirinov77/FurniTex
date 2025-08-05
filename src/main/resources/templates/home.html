@@ -104,11 +104,8 @@
             </div>
             <div class="product-grid">
                 <div th:each="product : ${products}" class="product-card">
-                    <div class="product-badge" th:if="${product.discount > 0}">
-                        <span th:text="'-' + ${product.discount} + '%'">-20%</span>
-                    </div>
                     <div class="product-image">
-                        <img th:src="${product.imageUrl}" th:alt="${product.name}" />
+                        <img th:src="${product.imagePath}" th:alt="${product.name}" />
                         <div class="product-actions">
                             <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
                                 <i class="far fa-heart"></i>
@@ -121,8 +118,7 @@
                     <div class="product-info">
                         <h3 th:text="${product.name}">Mahsulot nomi</h3>
                         <div class="product-price">
-                            <span class="current-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' so'm'">1 200 000 so'm</span>
-                            <span class="old-price" th:if="${product.oldPrice > 0}" th:text="${#numbers.formatDecimal(product.oldPrice, 0, 'COMMA', 0, 'POINT')} + ' so'm'">1 500 000 so'm</span>
+                            <span class="current-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' so'm'"></span>
                         </div>
                         <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Savatga qo'shish
