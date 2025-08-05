@@ -1,13 +1,13 @@
-/* Asosiy stil */
+/* ==================== Asosiy stil ==================== */
 :root {
-    --primary-color: #5d4037;
-    --secondary-color: #f4b400;
-    --accent-color: #8d6e63;
-    --light-color: #f5f5f5;
-    --dark-color: #333;
-    --text-color: #333;
-    --text-light: #777;
-    --white: #fff;
+    --primary-color: #5d4037; /* Asosiy jigarrang */
+    --secondary-color: #f4b400; /* Asosiy sariq */
+    --accent-color: #8d6e63; /* Yengil jigarrang */
+    --light-color: #f5f5f5; /* Ochiq kulrang */
+    --dark-color: #333; /* To'q kulrang */
+    --text-color: #333; /* Oddiy matn rangi */
+    --text-light: #777; /* Yengil matn rangi */
+    --white: #fff; /* Oq rang */
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
 }
@@ -18,11 +18,20 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--light-color);
     color: var(--text-color);
     line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .container {
@@ -32,14 +41,20 @@ body {
     padding: 0 20px;
 }
 
-/* Header stili */
+/* ==================== Header stili ==================== */
 .main-header {
     background-color: var(--white);
     box-shadow: var(--shadow);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
     padding: 15px 0;
+    animation: fadeInDown 0.5s ease-out;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .main-header .container {
@@ -60,6 +75,7 @@ body {
 .logo i {
     margin-right: 10px;
     font-size: 28px;
+    color: var(--secondary-color);
 }
 
 .search-bar {
@@ -82,6 +98,7 @@ body {
 
 .search-bar input:focus {
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(93, 64, 55, 0.2);
 }
 
 .search-btn {
@@ -96,10 +113,14 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-btn:hover {
     background: var(--accent-color);
+    transform: scale(1.1);
 }
 
 .nav-icons {
@@ -116,6 +137,11 @@ body {
     color: var(--text-color);
     font-size: 12px;
     position: relative;
+    transition: var(--transition);
+}
+
+.nav-icon:hover {
+    color: var(--primary-color);
 }
 
 .nav-icon i {
@@ -139,6 +165,10 @@ body {
     font-weight: bold;
 }
 
+.user-dropdown {
+    position: relative;
+}
+
 .user-btn {
     display: flex;
     align-items: center;
@@ -147,6 +177,11 @@ body {
     cursor: pointer;
     color: var(--text-color);
     gap: 5px;
+    transition: var(--transition);
+}
+
+.user-btn:hover {
+    color: var(--primary-color);
 }
 
 .user-btn i:last-child {
@@ -163,6 +198,15 @@ body {
     border-radius: 8px;
     padding: 10px 0;
     z-index: 1;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .dropdown-content a {
@@ -185,11 +229,7 @@ body {
     color: var(--primary-color);
 }
 
-.user-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Hero section */
+/* ==================== Hero section ==================== */
 .hero-section {
     display: flex;
     align-items: center;
@@ -201,6 +241,7 @@ body {
 .hero-content {
     flex: 1;
     padding-right: 50px;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 .hero-content h1 {
@@ -221,17 +262,28 @@ body {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow);
+    animation: scaleIn 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .hero-image img {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .hero-image:hover img {
-    transform: scale(1.03);
+    transform: scale(1.05);
 }
 
 .hero-buttons {
@@ -247,17 +299,19 @@ body {
     border-radius: 30px;
     font-weight: 600;
     text-decoration: none;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    white-space: nowrap;
 }
 
 .btn-primary {
     background: var(--secondary-color);
     color: var(--primary-color);
+    border: 2px solid var(--secondary-color);
 }
 
 .btn-primary:hover {
     background: #e6a700;
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.02);
     box-shadow: 0 6px 15px rgba(244, 180, 0, 0.3);
 }
 
@@ -269,7 +323,7 @@ body {
 
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.02);
     box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
 }
 
@@ -277,7 +331,7 @@ body {
     margin-right: 8px;
 }
 
-/* Features section */
+/* ==================== Features section ==================== */
 .features-section {
     padding: 60px 0;
     background: var(--white);
@@ -285,7 +339,7 @@ body {
 
 .features-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Elementlar bir xil kenglikda bo'lishi uchun minmax(250px, 1fr) ishlatiladi */
     gap: 30px;
 }
 
@@ -293,14 +347,16 @@ body {
     text-align: center;
     padding: 40px 30px;
     border-radius: 10px;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     background: var(--light-color);
     box-shadow: var(--shadow);
+    border: 1px solid transparent;
 }
 
 .feature-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
 }
 
 .feature-card i {
@@ -311,7 +367,7 @@ body {
 }
 
 .feature-card:hover i {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(5deg);
 }
 
 .feature-card h3 {
@@ -325,7 +381,7 @@ body {
     font-size: 16px;
 }
 
-/* Products section */
+/* ==================== Products section ==================== */
 .products-section {
     padding: 80px 0;
     background: var(--light-color);
@@ -354,6 +410,11 @@ body {
     width: 50px;
     height: 3px;
     background: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+
+.section-title:hover::after {
+    width: 100%;
 }
 
 .view-all {
@@ -389,7 +450,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
 }
 
@@ -409,6 +470,13 @@ body {
     font-size: 12px;
     font-weight: 600;
     z-index: 2;
+    animation: bounceIn 0.8s ease-out;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
 }
 
 .product-image {
@@ -421,7 +489,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .product-card:hover .product-image img {
@@ -430,17 +498,20 @@ body {
 
 .product-actions {
     position: absolute;
-    bottom: -50px;
+    bottom: 20px;
     left: 0;
     right: 0;
     display: flex;
     justify-content: center;
     gap: 15px;
-    transition: var(--transition);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .product-card:hover .product-actions {
-    bottom: 20px;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .action-btn {
@@ -461,7 +532,7 @@ body {
 .action-btn:hover {
     background: var(--primary-color);
     color: var(--white);
-    transform: scale(1.1);
+    transform: scale(1.2) rotate(15deg);
 }
 
 .product-info {
@@ -472,6 +543,7 @@ body {
     font-size: 18px;
     margin-bottom: 10px;
     color: var(--dark-color);
+    font-weight: 600;
 }
 
 .product-price {
@@ -515,9 +587,10 @@ body {
 .add-to-cart:hover {
     background: var(--accent-color);
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Categories section */
+/* ==================== Categories section ==================== */
 .categories-section {
     padding: 80px 0;
     background: var(--white);
@@ -534,10 +607,11 @@ body {
     padding: 30px 20px;
     background: var(--light-color);
     border-radius: 10px;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     text-decoration: none;
     color: var(--text-color);
     box-shadow: var(--shadow);
+    border: 1px solid transparent;
 }
 
 .category-card:hover {
@@ -545,6 +619,7 @@ body {
     color: var(--white);
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(93, 64, 55, 0.2);
+    border-color: var(--primary-color);
 }
 
 .category-icon {
@@ -562,7 +637,7 @@ body {
 .category-card:hover .category-icon {
     background: var(--secondary-color);
     color: var(--primary-color);
-    transform: rotate(15deg);
+    transform: scale(1.1) rotate(10deg);
 }
 
 .category-icon i {
@@ -584,34 +659,32 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Banner section */
+/* ==================== Banner section ==================== */
 .banner-section {
     padding: 100px 0;
     background: linear-gradient(rgba(93, 64, 55, 0.8), rgba(93, 64, 55, 0.8)),
     url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6') center/cover no-repeat;
+    background-attachment: fixed;
     color: var(--white);
     text-align: center;
     position: relative;
 }
 
-.banner-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-}
-
 .banner-content {
     position: relative;
     z-index: 1;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .banner-content h2 {
     font-size: 42px;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .banner-content p {
@@ -623,7 +696,7 @@ body {
     opacity: 0.9;
 }
 
-/* Testimonials section */
+/* ==================== Testimonials section ==================== */
 .testimonials-section {
     padding: 80px 0;
     background: var(--light-color);
@@ -641,6 +714,7 @@ body {
     border-radius: 10px;
     box-shadow: var(--shadow);
     transition: var(--transition);
+    border-left: 5px solid var(--secondary-color);
 }
 
 .testimonial-card:hover {
@@ -686,7 +760,7 @@ body {
     color: var(--text-light);
 }
 
-/* Footer */
+/* ==================== Footer ==================== */
 .main-footer {
     background: var(--primary-color);
     color: var(--white);
@@ -744,7 +818,7 @@ body {
 .footer-social a:hover {
     background: var(--secondary-color);
     color: var(--primary-color);
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.1);
 }
 
 .footer-title {
@@ -783,6 +857,7 @@ body {
 .footer-links a:hover {
     color: var(--secondary-color);
     padding-left: 5px;
+    transform: translateX(3px);
 }
 
 .footer-links a i {
@@ -845,7 +920,7 @@ body {
     transform: translateY(-3px);
 }
 
-/* Responsive design */
+/* ==================== Responsive design ==================== */
 @media (max-width: 992px) {
     .hero-section {
         flex-direction: column;
