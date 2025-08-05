@@ -1,39 +1,43 @@
 package org.example.model;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Savatdagi har bir mahsulotni ifodalovchi entity.
-@Entity
-@Table(name = "carts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cart {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Ushbu savatdagi mahsulot.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    // Foydalanuvchi va mahsulot ID'lari
+    private Long productId;
+    private Long userId;
 
-    // Ushbu savatdagi foydalanuvchi.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    // Mahsulot miqdori.
-    @Column(nullable = false)
     private int quantity;
 
-    // Ma'lumotlar bazasida saqlanmaydi, faqat hisoblash uchun.
-    @Transient
+    // Mahsulot narxi hisoblash uchun (DBga yozilmaydi)
+    private Double productPrice;
+
+    // Foydalanuvchi va mahsulot obyektlari (optional)
+    private Product product;
+    private User user;
+
     public Double getTotalPrice() {
-        return product != null && product.getPrice() != null ? product.getPrice() * quantity : 0.0;
+        return productPrice != null ? productPrice * quantity : 0.0;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        if (user != null) {
+            this.userId = user.getId();
+        }
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+        if (product != null) {
+            this.productId = product.getId();
+        }
     }
 }
