@@ -26,60 +26,31 @@ public class CartService {
         this.userRepository = userRepository;
     }
 
-    /**
-     * Savatni saqlash.
-     * @param cart saqlanadigan savat obyekti
-     * @return saqlangan savat obyekti
-     */
     public Cart save(Cart cart) {
         return cartRepository.save(cart);
     }
 
-    /**
-     * ID bo'yicha savatni topish.
-     * @param id savat IDsi
-     * @return savat obyekti (Optional)
-     */
     public Optional<Cart> findById(Long id) {
         return cartRepository.findById(id);
     }
 
-    /**
-     * Barcha savatdagi mahsulotlarni topish.
-     * @return barcha savatdagi mahsulotlar ro'yxati
-     */
     public List<Cart> findAll() {
         return cartRepository.findAll();
     }
 
-    /**
-     * Foydalanuvchi IDsi bo'yicha savatdagi barcha mahsulotlarni olish.
-     * @param userId foydalanuvchi IDsi
-     * @return savatdagi mahsulotlar ro'yxati
-     */
     public List<Cart> getCartItems(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Foydalanuvchi topilmadi"));
         return cartRepository.findAllByUser(user);
     }
 
-    /**
-     * Savatning umumiy narxini hisoblash.
-     * @param userId foydalanuvchi IDsi
-     * @return umumiy narx
-     */
     public Double getTotal(Long userId) {
         List<Cart> cartItems = getCartItems(userId);
         return cartItems.stream()
-                .mapToDouble(cartItem -> cartItem.getProduct().getPrice() * cartItem.getQuantity())
+                .mapToDouble(cartItem -> cartItem.getProductPrice() * cartItem.getQuantity())
                 .sum();
     }
 
-    /**
-     * Mahsulotni savatga qo'shish. Agar mahsulot allaqachon mavjud bo'lsa, miqdorini oshiradi.
-     * @param userId foydalanuvchi IDsi
-     * @param productId mahsulot IDsi
-     */
     public void addProductToCart(Long userId, Long productId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Foydalanuvchi topilmadi"));
@@ -100,11 +71,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Savatdan mahsulotni o'chirish.
-     * @param userId foydalanuvchi IDsi
-     * @param productId mahsulot IDsi
-     */
     public void removeProductFromCart(Long userId, Long productId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Foydalanuvchi topilmadi"));
@@ -115,12 +81,6 @@ public class CartService {
         existingCartItem.ifPresent(cartRepository::delete);
     }
 
-    /**
-     * Savatdagi mahsulot miqdorini yangilash.
-     * @param userId foydalanuvchi IDsi
-     * @param productId mahsulot IDsi
-     * @param quantity yangi miqdor
-     */
     public void updateCartItem(Long userId, Long productId, int quantity) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Foydalanuvchi topilmadi"));

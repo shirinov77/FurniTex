@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>FurniTex - Profilni tahrirlash</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/edit-profile.css">
 </head>
 <body>
+<div class="container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <i class="fas fa-user-edit"></i>
+            <h2>Profilni tahrirlash</h2>
+        </div>
 
+        <div class="avatar-section">
+            <img src="/static/images/default-avatar.jpg" alt="Profil rasmi" class="avatar">
+            <button class="btn-change-avatar">
+                <i class="fas fa-camera"></i> Rasmni o'zgartirish
+            </button>
+            <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+        </div>
+
+        <form class="profile-form">
+            <div class="form-group">
+                <label for="firstName">
+                    <i class="fas fa-user"></i> Ism
+                </label>
+                <input type="text" id="firstName" name="firstName" value="Ismingiz" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">
+                    <i class="fas fa-user"></i> Familiya
+                </label>
+                <input type="text" id="lastName" name="lastName" value="Familyangiz" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Email
+                </label>
+                <input type="email" id="email" name="email" value="example@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">
+                    <i class="fas fa-phone"></i> Telefon raqam
+                </label>
+                <input type="tel" id="phone" name="phone" value="+998 xx xxx xx xx" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> Yangi parol (agar o'zgartirmoqchi bo'lsangiz)
+                </label>
+                <div class="password-input">
+                    <input type="password" id="password" name="password">
+                    <button type="button" class="toggle-password">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="fas fa-save"></i> O'zgarishlarni saqlash
+                </button>
+                <a href="/profile" class="btn-cancel">
+                    <i class="fas fa-times"></i> Bekor qilish
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/static/js/edit-profile.js"></script>
 </body>
 </html>

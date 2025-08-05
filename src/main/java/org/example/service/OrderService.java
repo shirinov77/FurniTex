@@ -6,11 +6,10 @@ import org.example.model.OrderStatus;
 import org.example.model.User;
 import org.example.repository.CartRepository;
 import org.example.repository.OrderRepository;
-import org.example.repository.ProductRepository;
 import org.example.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +21,6 @@ public class OrderService {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
 
-    @Autowired
     public OrderService(OrderRepository orderRepository,
                         UserRepository userRepository,
                         CartRepository cartRepository) {
@@ -31,51 +29,31 @@ public class OrderService {
         this.cartRepository = cartRepository;
     }
 
-    /**
-     * Buyurtmani saqlash.
-     * @param order saqlanadigan buyurtma obyekti
-     * @return saqlangan buyurtma obyekti
-     */
     public Order save(Order order) {
-        return orderRepository.save(order);
+        order.setCreatedAt(LocalDateTime.now());
+        orderRepository.save(order);
+        return order;
     }
 
-    /**
-     * Barcha buyurtmalarni olish.
-     * @return barcha buyurtmalar ro'yxati
-     */
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
-    /**
-     * ID bo'yicha buyurtmani topish.
-     * @param id buyurtma IDsi
-     * @return buyurtma obyekti (Optional)
-     */
     public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
     }
 
-    /**
-     * ID bo'yicha buyurtmani o'chirish.
-     * @param id o'chiriladigan buyurtma IDsi
-     */
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
     }
 
-    /**
-     * Checkout: foydalanuvchi savatdagi barcha mahsulotlarni buyurtma qiladi.
-     * @param username foydalanuvchi nomi
-     */
     public void checkout(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Foydalanuvchi topilmadi: " + username));
 
         List<Cart> cartItems = cartRepository.findAllByUser(user);
         if (cartItems.isEmpty()) {
-            throw new RuntimeException("Savat bo'sh, buyurtma berib bo'lmaydi.");
+            throw new RuntimeException("Savat bo'sh!");
         }
 
         List<Order> orders = new ArrayList<>();
@@ -85,18 +63,14 @@ public class OrderService {
             order.setProduct(cartItem.getProduct());
             order.setQuantity(cartItem.getQuantity());
             order.setStatus(OrderStatus.PENDING);
+            order.setCreatedAt(LocalDateTime.now());
             orders.add(order);
         }
 
         orderRepository.saveAll(orders);
-        cartRepository.deleteAll(cartItems); // savatni tozalaymiz
+        cartRepository.deleteAll(cartItems);
     }
 
-    /**
-     * Foydalanuvchining barcha buyurtmalarini olish.
-     * @param username foydalanuvchi nomi
-     * @return foydalanuvchining buyurtmalari ro'yxati
-     */
     public List<Order> getOrdersByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Foydalanuvchi topilmadi: " + username));

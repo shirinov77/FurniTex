@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import jakarta.validation.Valid;
 import org.example.model.Category;
 import org.example.model.Product;
 import org.example.service.CategoryService;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,9 +20,7 @@ public class AdminController {
     private final ProductService productService;
     private final UserService userService;
 
-    public AdminController(CategoryService categoryService,
-                           ProductService productService,
-                           UserService userService) {
+    public AdminController(CategoryService categoryService, ProductService productService, UserService userService){
         this.categoryService = categoryService;
         this.productService = productService;
         this.userService = userService;
@@ -52,7 +48,7 @@ public class AdminController {
     }
 
     @PostMapping("/categories/add")
-    public String addCategory(@Valid @ModelAttribute("category") Category category, BindingResult result) {
+    public String addCategory(@ModelAttribute("category") Category category, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/add-category";
         }
@@ -71,7 +67,7 @@ public class AdminController {
     }
 
     @PostMapping("/categories/edit/{id}")
-    public String editCategory(@PathVariable Long id, @Valid @ModelAttribute("category") Category category, BindingResult result) {
+    public String editCategory(@PathVariable Long id, @ModelAttribute("category") Category category, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/edit-category";
         }
@@ -89,53 +85,53 @@ public class AdminController {
 
     @GetMapping("/products")
     public String listProducts(Model model) {
-        return handleWithModel(model, () -> {
-            model.addAttribute("products", productService.findAll());
-            return "admin/products";
-        });
+        model.addAttribute("products", productService.getAllProducts());
+        return "admin/products";
     }
 
     @GetMapping("/products/add")
     public String addProductForm(Model model) {
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("users", userService.findAll()); // Sotuvchi ro'yxati
+        model.addAttribute("users", userService.findAll());
         return "admin/add-product";
     }
 
     @PostMapping("/products/add")
-    public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model) {
+    public String addProduct(@ModelAttribute("product") Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("users", userService.findAll());
             return "admin/add-product";
         }
-        productService.save(product);
+        productService.saveProduct(product);
         return "redirect:/admin/products";
     }
 
     @GetMapping("/products/edit/{id}")
     public String editProductForm(@PathVariable Long id, Model model) {
-        Product product = productService.findById(id).orElseThrow(() -> new RuntimeException("Mahsulot topilmadi"));
-        List<Category> categories = categoryService.findAll();
+        Product product = productService.getProductById(id);
         model.addAttribute("product", product);
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("users", userService.findAll());
         return "admin/edit-product";
     }
 
     @PostMapping("/products/edit/{id}")
-    public String editProduct(@PathVariable Long id, @Valid @ModelAttribute("product") Product product, BindingResult result, Model model) {
+    public String editProduct(@PathVariable Long id, @ModelAttribute("product") Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("users", userService.findAll());
             return "admin/edit-product";
         }
-        productService.update(id, product);
+        product.setId(id);
+        productService.updateProduct(id, product);  // <-- E'tibor bering: id qo‘shildi
         return "redirect:/admin/products";
     }
 
     @PostMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        productService.delete(id);
+        productService.deleteProduct(id);
         return "redirect:/admin/products";
     }
 

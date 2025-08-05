@@ -19,12 +19,8 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
-/**
- * Bu sinf Spring MVC konfiguratsiyasini qo'lda sozlash uchun ishlatiladi.
- * Spring Boot loyihalarida bu sinf odatda kerak emas, chunki @SpringBootApplication
- * annotatsiyasi ko'p ishlarni avtomatik bajaradi. Agar siz default xulq-atvorni
- * o'zgartirishingiz kerak bo'lsa, ushbu sinf foydali bo'lishi mumkin.
- */
+import javax.sql.DataSource;
+
 @Configuration
 @ComponentScan("org.example")
 @EnableWebMvc
@@ -37,65 +33,61 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Autowired
     private Environment env;
 
-    // Thymeleaf shablonlarini topish va ishlash uchun sozlash.
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
-        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("classpath:/templates/");
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCacheable(true);
-        templateResolver.setCharacterEncoding("UTF-8");
-        return templateResolver;
+        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+        resolver.setApplicationContext(applicationContext);
+        resolver.setPrefix("classpath:/templates/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setCacheable(true);
+        return resolver;
     }
 
-    // Thymeleaf shablon motorini sozlash.
     @Bean
     public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.setEnableSpringELCompiler(true);
-        return templateEngine;
+        SpringTemplateEngine engine = new SpringTemplateEngine();
+        engine.setTemplateResolver(templateResolver());
+        engine.setEnableSpringELCompiler(true);
+        return engine;
     }
 
-    // Thymeleaf ko'rish hal qiluvchisini sozlash.
     @Bean
     public ThymeleafViewResolver viewResolver() {
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setOrder(1);
-        viewResolver.setCharacterEncoding("UTF-8");
-        return viewResolver;
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine());
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setOrder(1);
+        return resolver;
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Resurslar (rasmlar, CSS, JS) uchun to'g'ri joylashuv
-        // Loyihaning src/main/resources/static papkasini ko'rsatish
-        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("classpath:/static/");
     }
 
     @Bean
     public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
+        ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:messages");
+        source.setDefaultEncoding("UTF-8");
+        return source;
     }
 
     @Bean
-    public DriverManagerDataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl(env.getRequiredProperty("spring.datasource.url"));
-        dataSource.setUsername(env.getRequiredProperty("spring.datasource.username"));
-        dataSource.setPassword(env.getRequiredProperty("spring.datasource.password"));
-        dataSource.setDriverClassName(env.getRequiredProperty("spring.datasource.driver-class-name"));
-        return dataSource;
+    public DataSource dataSource() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setUrl(env.getRequiredProperty("spring.datasource.url"));
+        ds.setUsername(env.getRequiredProperty("spring.datasource.username"));
+        ds.setPassword(env.getRequiredProperty("spring.datasource.password"));
+        ds.setDriverClassName(env.getRequiredProperty("spring.datasource.driver-class-name"));
+        return ds;
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 }
