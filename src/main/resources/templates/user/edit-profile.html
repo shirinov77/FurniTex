@@ -1,102 +1,82 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Profilni tahrirlash</title>
+    <title>FurniTex - Profilni tahrirlash</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 60px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 18px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            text-align: center;
-            color: #4CAF50;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/edit-profile.css">
 </head>
 <body>
-
 <div class="container">
-    <h2>Profilni tahrirlash</h2>
-    <form>
-        <label for="firstName">Ism</label>
-        <input type="text" id="firstName" name="firstName" value="Dilnura">
+    <div class="profile-card">
+        <div class="profile-header">
+            <i class="fas fa-user-edit"></i>
+            <h2>Profilni tahrirlash</h2>
+        </div>
 
-        <label for="lastName">Familiya</label>
-        <input type="text" id="lastName" name="lastName" value="Shirinova">
+        <div class="avatar-section">
+            <img src="/static/images/default-avatar.jpg" alt="Profil rasmi" class="avatar">
+            <button class="btn-change-avatar">
+                <i class="fas fa-camera"></i> Rasmni o'zgartirish
+            </button>
+            <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+        </div>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="dilnura@example.com">
+        <form class="profile-form">
+            <div class="form-group">
+                <label for="firstName">
+                    <i class="fas fa-user"></i> Ism
+                </label>
+                <input type="text" id="firstName" name="firstName" value="Dilnura" required>
+            </div>
 
-        <label for="password">Yangi parol</label>
-        <input type="password" id="password" name="password">
+            <div class="form-group">
+                <label for="lastName">
+                    <i class="fas fa-user"></i> Familiya
+                </label>
+                <input type="text" id="lastName" name="lastName" value="Shirinova" required>
+            </div>
 
-        <button type="submit">Saqlash</button>
-    </form>
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Email
+                </label>
+                <input type="email" id="email" name="email" value="dilnura@example.com" required>
+            </div>
 
-    <a class="back-link" href="profile.html">⬅ Profilga qaytish</a>
+            <div class="form-group">
+                <label for="phone">
+                    <i class="fas fa-phone"></i> Telefon raqam
+                </label>
+                <input type="tel" id="phone" name="phone" value="+998901234567" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> Yangi parol (agar o'zgartirmoqchi bo'lsangiz)
+                </label>
+                <div class="password-input">
+                    <input type="password" id="password" name="password">
+                    <button type="button" class="toggle-password">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="fas fa-save"></i> O'zgarishlarni saqlash
+                </button>
+                <a href="/profile" class="btn-cancel">
+                    <i class="fas fa-times"></i> Bekor qilish
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
 
+<script src="/static/js/edit-profile.js"></script>
 </body>
 </html>

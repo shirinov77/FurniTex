@@ -1,129 +1,134 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Ro‘yxatdan o‘tish</title>
-    <style>
-        body {
-            background-color: #f3f4f6;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .form-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            text-align: center;
-            color: #111827;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 6px;
-            color: #374151;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-            background-color: #f9fafb;
-            transition: border 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background-color: #fff;
-        }
-
-        .sign {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            background-color: #3b82f6;
-            color: white;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .sign:hover {
-            background-color: #2563eb;
-        }
-
-        .signup {
-            margin-top: 20px;
-            font-size: 14px;
-            text-align: center;
-            color: #6b7280;
-        }
-
-        .signup a {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-
-        .signup a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FurniTex - Ro'yxatdan o'tish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/register.css">
 </head>
 <body>
-<div class="form-container">
-    <form class="form" action="/register" method="post">
-        <p class="form-title">Ro‘yxatdan o‘tish</p>
 
-        <div class="input-group">
-            <label for="name">Ismingiz</label>
-            <input type="text" id="name" name="name" placeholder="Ismingizni kiriting" required />
+<header class="register-header">
+    <div class="container">
+        <a href="/" class="logo">
+            <i class="fas fa-couch"></i>
+            <span>FurniTex</span>
+        </a>
+        <a th:href="@{/login}" class="login-link">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Kirish</span>
+        </a>
+    </div>
+</header>
+
+<main class="register-main">
+    <div class="container">
+        <div class="register-card">
+            <div class="register-header">
+                <h1>Hisob yaratish</h1>
+                <p>FurniTex jamoasiga qo'shiling</p>
+            </div>
+
+            <form action="/register" method="POST" class="register-form">
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fas fa-user"></i>
+                        Ism
+                    </label>
+                    <input type="text" id="name" name="name" placeholder="Ismingizni kiriting" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </label>
+                    <input type="email" id="email" name="email" placeholder="email@example.com" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">
+                        <i class="fas fa-phone"></i>
+                        Telefon raqam
+                    </label>
+                    <input type="tel" id="phone" name="phone" placeholder="+998 XX XXX XX XX" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Parol
+                    </label>
+                    <div class="password-input">
+                        <input type="password" id="password" name="password" placeholder="Kamida 8 ta belgi" required />
+                        <button type="button" class="toggle-password">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <p class="password-hint">Parol kamida 8 ta belgidan iborat bo'lishi kerak</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <i class="fas fa-lock"></i>
+                        Parolni tasdiqlang
+                    </label>
+                    <div class="password-input">
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Parolni qayta kiriting" required />
+                        <button type="button" class="toggle-password">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="terms-agreement">
+                        <input type="checkbox" id="terms" name="terms" required />
+                        <span>Men <a href="/terms">foydalanish shartlari</a> va <a href="/privacy">maxfiylik siyosati</a>ga roziman</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-user-plus"></i> Ro'yxatdan o'tish
+                </button>
+
+                <div class="divider">
+                    <span>yoki</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i>
+                        Google bilan ro'yxatdan o'tish
+                    </button>
+                    <button type="button" class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook bilan ro'yxatdan o'tish
+                    </button>
+                </div>
+
+                <div class="login-prompt">
+                    Allaqachon hisobingiz bormi? <a th:href="@{/login}">Kirish</a>
+                </div>
+            </form>
         </div>
+    </div>
+</main>
 
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email kiriting" required />
+<footer class="register-footer">
+    <div class="container">
+        <div class="footer-links">
+            <a th:href="@{/privacy}">Maxfiylik</a>
+            <a th:href="@{/terms}">Shartlar</a>
+            <a th:href="@{/contact}">Yordam</a>
         </div>
+        <p>&copy; 2023 FurniTex. Barcha huquqlar himoyalangan.</p>
+    </div>
+</footer>
 
-        <div class="input-group">
-            <label for="password">Parol</label>
-            <input type="password" id="password" name="password" placeholder="Parolingizni kiriting" required />
-        </div>
+<script src="/static/js/register.js"></script>
 
-        <div class="input-group">
-            <label for="confirmPassword">Parolni tasdiqlang</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Parolni qayta kiriting" required />
-        </div>
-
-        <button class="sign" type="submit">Ro‘yxatdan o‘tish</button>
-
-        <p class="signup">
-            Allaqachon hisobingiz bormi?
-            <a href="login.html">Kirish</a>
-        </p>
-    </form>
-</div>
 </body>
 </html>
