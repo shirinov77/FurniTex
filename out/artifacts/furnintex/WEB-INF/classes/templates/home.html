@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FurniTex - Mebel va Uy Ro'zg'or Buyumlari</title>
+    <title>Furni Tura - Tikuvchilik va Zamonaviy Zamoklar</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/home.css">
 </head>
 <body>
@@ -13,8 +16,8 @@
 <header class="main-header">
     <div class="container">
         <div class="logo">
-            <i class="fas fa-couch"></i>
-            <span>FurniTex</span>
+            <i class="material-icons">content_cut</i>
+            <span>Furni Tura</span>
         </div>
 
         <div class="search-bar">
@@ -52,8 +55,8 @@
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <h1>Uyingiz uchun ajoyib mebel to'plami</h1>
-                <p>Zamonaviy dizayn, qulaylik va uzoq muddatli ishlash - barchasi bir joyda</p>
+                <h1>Tikuvchilik uchun barcha kerakli materiallar</h1>
+                <p>Yuqori sifatli iplar, zamoklar, dazmollar va boshqa aksessuarlar</p>
                 <div class="hero-buttons">
                     <a th:href="@{/products}" class="btn-primary">
                         <i class="fas fa-shopping-bag"></i> Hozir xarid qilish
@@ -64,32 +67,34 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc" alt="Zamonaviy mebel to'plami" />
+                <img src="https://images.unsplash.com/photo-1603262110263-fb0112e7cc33" alt="Tikuvchilik materiallari" />
             </div>
         </div>
     </section>
 
     <section class="features-section">
-        <div class="container features-container">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
-                <h3>Tez yetkazib berish</h3>
-                <p>Buyurtmangiz 3 ish kuni ichida yetkazib beriladi</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>Kafolat</h3>
-                <p>Barcha mahsulotlarimiz 2 yilgacha kafolat bilan</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                <h3>24/7 Qo'llab-quvvatlash</h3>
-                <p>Har qanday savol uchun mutaxassislarimiz doimo tayyor</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-money-check-alt"></i></div>
-                <h3>Qulay to'lovlar</h3>
-                <p>Naqd va onlayn to'lov usullari mavjud</p>
+        <div class="container">
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <h3>Tez yetkazib berish</h3>
+                    <p>Buyurtmangiz 1-2 ish kuni ichida yetkazib beriladi</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-award"></i></div>
+                    <h3>Yuqori sifat</h3>
+                    <p>Barcha mahsulotlarimiz sifat va mustahkamlikka tekshirilgan</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Mutaxassis yordami</h3>
+                    <p>Tikuvchilik bo'yicha maslahat va qo'llab-quvvatlash</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-undo-alt"></i></div>
+                    <h3>Qaytarib berish</h3>
+                    <p>14 kun ichida mahsulotni qaytarish imkoniyati</p>
+                </div>
             </div>
         </div>
     </section>
@@ -97,15 +102,15 @@
     <section class="products-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Tavsiya etilgan mahsulotlar</h2>
+                <h2 class="section-title">Ko'p sotiladigan mahsulotlar</h2>
                 <a th:href="@{/products}" class="view-all">
                     Hammasini ko'rish <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
             <div class="product-grid">
-                <div th:each="product : ${products}" class="product-card">
+                <div class="product-card">
                     <div class="product-image">
-                        <img th:src="${product.imagePath}" th:alt="${product.name}" />
+                        <img src="https://m.media-amazon.com/images/I/71YHh8XyJgL._AC_UF1000,1000_QL80_.jpg" alt="Tikuv ipi" />
                         <div class="product-actions">
                             <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
                                 <i class="far fa-heart"></i>
@@ -116,9 +121,75 @@
                         </div>
                     </div>
                     <div class="product-info">
-                        <h3 th:text="${product.name}">Mahsulot nomi</h3>
+                        <h3>Premium tikuv ipi</h3>
                         <div class="product-price">
-                            <span class="current-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' so'm'"></span>
+                            <span class="current-price">25,000 so'm</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i> Savatga qo'shish
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://5.imimg.com/data5/SELLER/Default/2021/12/QO/YD/JA/3033603/zipper-ykk.jpg" alt="Zamok" />
+                        <div class="product-actions">
+                            <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>YKK metall zamok</h3>
+                        <div class="product-price">
+                            <span class="current-price">15,000 so'm</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i> Savatga qo'shish
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://m.media-amazon.com/images/I/61iS6mLyURL._AC_UF1000,1000_QL80_.jpg" alt="Dazmol" />
+                        <div class="product-actions">
+                            <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Plastik dazmollar</h3>
+                        <div class="product-price">
+                            <span class="current-price">8,000 so'm</span>
+                        </div>
+                        <button class="add-to-cart">
+                            <i class="fas fa-cart-plus"></i> Savatga qo'shish
+                        </button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://m.media-amazon.com/images/I/71tGpY9nVVL._AC_UF1000,1000_QL80_.jpg" alt="Tikuv to'plami" />
+                        <div class="product-actions">
+                            <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Tikuvchilik to'plami</h3>
+                        <div class="product-price">
+                            <span class="current-price">120,000 so'm</span>
                         </div>
                         <button class="add-to-cart">
                             <i class="fas fa-cart-plus"></i> Savatga qo'shish
@@ -133,33 +204,33 @@
         <div class="container">
             <h2 class="section-title">Kategoriyalar</h2>
             <div class="category-grid">
-                <a th:href="@{/category/living-room}" class="category-card">
+                <a th:href="@{/category/threads}" class="category-card">
                     <div class="category-icon">
-                        <i class="fas fa-couch"></i>
+                        <i class="material-icons">layers</i>
                     </div>
-                    <h3>Mehmonxona mebellari</h3>
-                    <p th:text="${categoryCounts.livingRoom} + '+ mahsulot'">50+ mahsulot</p>
+                    <h3>Tikuv iplari</h3>
+                    <p>50+ mahsulot</p>
                 </a>
-                <a th:href="@{/category/bedroom}" class="category-card">
+                <a th:href="@{/category/zippers}" class="category-card">
                     <div class="category-icon">
-                        <i class="fas fa-bed"></i>
+                        <i class="material-icons">call_to_action</i>
                     </div>
-                    <h3>Yotoq xona mebellari</h3>
-                    <p th:text="${categoryCounts.bedroom} + '+ mahsulot'">35+ mahsulot</p>
+                    <h3>Zamoklar</h3>
+                    <p>35+ mahsulot</p>
                 </a>
-                <a th:href="@{/category/kitchen}" class="category-card">
+                <a th:href="@{/category/buttons}" class="category-card">
                     <div class="category-icon">
-                        <i class="fas fa-utensils"></i>
+                        <i class="material-icons">radio_button_checked</i>
                     </div>
-                    <h3>Oshxona mebellari</h3>
-                    <p th:text="${categoryCounts.kitchen} + '+ mahsulot'">40+ mahsulot</p>
+                    <h3>Tugmalar</h3>
+                    <p>40+ mahsulot</p>
                 </a>
-                <a th:href="@{/category/office}" class="category-card">
+                <a th:href="@{/category/accessories}" class="category-card">
                     <div class="category-icon">
-                        <i class="fas fa-chair-office"></i>
+                        <i class="material-icons">checkroom</i>
                     </div>
-                    <h3>Ofis mebellari</h3>
-                    <p th:text="${categoryCounts.office} + '+ mahsulot'">25+ mahsulot</p>
+                    <h3>Aksessuarlar</h3>
+                    <p>25+ mahsulot</p>
                 </a>
             </div>
         </div>
@@ -168,10 +239,10 @@
     <section class="banner-section">
         <div class="container">
             <div class="banner-content">
-                <h2>Yozgi chegirmalar</h2>
-                <p>Tanlangan mebellarda 30% gacha chegirma</p>
-                <a th:href="@{/summer-sale}" class="btn-primary">
-                    <i class="fas fa-fire"></i> Chegirmalarni ko'rish
+                <h2>Yangi kelgan mahsulotlar</h2>
+                <p>Zamonaviy dizayndagi zamoklar va aksessuarlar</p>
+                <a th:href="@{/new-arrivals}" class="btn-primary">
+                    <i class="fas fa-star"></i> Yangiliklarni ko'rish
                 </a>
             </div>
         </div>
@@ -190,10 +261,10 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="testimonial-text">
-                        "FurniTex-dan mehmonxona uchun divan sotib oldim. Juda sifatli va qulay. Yetkazib berish ham o'z vaqtida bo'ldi."
+                        "Furni Tura'dan tikuv ipi va zamok sotib oldim. Juda sifatli mahsulotlar. Yetkazib berish ham juda tez bo'ldi."
                     </p>
                     <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dilfuza Rahimova" />
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Dilfuza Rahimova" />
                         <div>
                             <h4>Dilfuza Rahimova</h4>
                             <span>Toshkent</span>
@@ -209,10 +280,10 @@
                         <i class="fas fa-star-half-alt"></i>
                     </div>
                     <p class="testimonial-text">
-                        "Yotoq xonam uchun to'plam sotib oldim. Dizayn va sifat juda zo'r. Xarid qilganimdan xursandman."
+                        "Tikuvchilik to'plami juda qulay va barcha kerakli narsalar bor. Xarid qilganimdan xursandman."
                     </p>
                     <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Javlon Sobirov" />
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Javlon Sobirov" />
                         <div>
                             <h4>Javlon Sobirov</h4>
                             <span>Samarqand</span>
@@ -228,11 +299,11 @@
     <div class="container footer-container">
         <div class="footer-column">
             <div class="footer-logo">
-                <i class="fas fa-couch"></i>
-                <span>FurniTex</span>
+                <i class="material-icons">content_cut</i>
+                <span>Furni Tura</span>
             </div>
             <p class="footer-about">
-                FurniTex - bu zamonaviy va qulay mebellarni ishlab chiqaruvchi kompaniya. Biz mijozlarimizga eng yaxshi sifat va dizaynni taklif qilamiz.
+                Furni Tura - tikuvchilik va tikuv aksessuarlari bo'yicha yetakchi do'kon. Biz mijozlarimizga eng yaxshi sifatli mahsulotlarni taklif qilamiz.
             </p>
             <div class="footer-social">
                 <a href="#"><i class="fab fa-telegram"></i></a>
@@ -248,7 +319,7 @@
                 <li><a th:href="@{/about}"><i class="fas fa-chevron-right"></i> Biz haqimizda</a></li>
                 <li><a th:href="@{/products}"><i class="fas fa-chevron-right"></i> Mahsulotlar</a></li>
                 <li><a th:href="@{/discounts}"><i class="fas fa-chevron-right"></i> Chegirmalar</a></li>
-                <li><a th:href="@{/news}"><i class="fas fa-chevron-right"></i> Yangiliklar</a></li>
+                <li><a th:href="@{/blog}"><i class="fas fa-chevron-right"></i> Blog</a></li>
                 <li><a th:href="@{/contact}"><i class="fas fa-chevron-right"></i> Aloqa</a></li>
             </ul>
         </div>
@@ -259,7 +330,7 @@
                 <li><a th:href="@{/account}"><i class="fas fa-chevron-right"></i> Mening hisobim</a></li>
                 <li><a th:href="@{/orders}"><i class="fas fa-chevron-right"></i> Buyurtmalar tarixi</a></li>
                 <li><a th:href="@{/cart}"><i class="fas fa-chevron-right"></i> Savat</a></li>
-                <li><a th:href="@{/wishlist}"><i class="fas fa-chevron-right"></i> Xaridlar</a></li>
+                <li><a th:href="@{/wishlist}"><i class="fas fa-chevron-right"></i> Saralanganlar</a></li>
                 <li><a th:href="@{/help}"><i class="fas fa-chevron-right"></i> Yordam</a></li>
             </ul>
         </div>
@@ -277,7 +348,7 @@
                 </li>
                 <li>
                     <i class="fas fa-envelope"></i>
-                    <span>support@furnitex.uz</span>
+                    <span>support@furnitura.uz</span>
                 </li>
                 <li>
                     <i class="fas fa-clock"></i>
@@ -289,7 +360,7 @@
 
     <div class="footer-bottom">
         <div class="container">
-            <p>&copy; 2023 FurniTex. Barcha huquqlar himoyalangan.</p>
+            <p>&copy; 2023 Furni Tura. Barcha huquqlar himoyalangan.</p>
             <div class="payment-methods">
                 <i class="fab fa-cc-visa"></i>
                 <i class="fab fa-cc-mastercard"></i>

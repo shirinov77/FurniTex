@@ -4,38 +4,32 @@ import org.example.model.Order;
 import org.example.model.OrderStatus;
 import org.example.model.Product;
 import org.example.model.User;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class OrderRepository {
 
-    private final Connection connection;
+    private final JdbcTemplate jdbcTemplate;
 
-    public OrderRepository(Connection connection) {
-        this.connection = connection;
+    public OrderRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void save(Order order) {
         String sql = "INSERT INTO orders (user_id, product_id, quantity, status, created_at) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setLong(1, order.getBuyer().getId());
-            ps.setLong(2, order.getProduct().getId());
-            ps.setInt(3, order.getQuantity());
-            ps.setString(4, order.getStatus().name());
-            ps.setTimestamp(5, Timestamp.valueOf(order.getCreatedAt() != null ? order.getCreatedAt() : LocalDateTime.now()));
-            ps.executeUpdate();
-
-            ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) {
-                order.setId(keys.getLong(1));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        jdbcTemplate.update(sql,
+                order.getBuyer().getId(),
+                order.getProduct().getId(),
+                order.getQuantity(),
+                order.getStatus().name(),
+                Timestamp.valueOf(order.getCreatedAt() != null ? order.getCreatedAt() : LocalDateTime.now()));
     }
 
     public void saveAll(List<Order> orders) {
@@ -45,109 +39,53 @@ public class OrderRepository {
     }
 
     public List<Order> findAll() {
-        List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";
-        try (PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                orders.add(mapResultSetToOrder(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orders;
+        return jdbcTemplate.query(sql, orderRowMapper());
     }
 
     public Optional<Order> findById(Long id) {
         String sql = "SELECT * FROM orders WHERE id = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setLong(1, id);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return Optional.of(mapResultSetToOrder(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+        List<Order> orders = jdbcTemplate.query(sql, orderRowMapper(), id);
+        return orders.stream().findFirst();
     }
 
     public void deleteById(Long id) {
         String sql = "DELETE FROM orders WHERE id = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setLong(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        jdbcTemplate.update(sql, id);
     }
 
     public List<Order> findByBuyerId(Long userId) {
-        List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders WHERE user_id = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setLong(1, userId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                orders.add(mapResultSetToOrder(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orders;
+        return jdbcTemplate.query(sql, orderRowMapper(), userId);
     }
 
     public List<Order> findByStatus(OrderStatus status) {
-        List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders WHERE status = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, status.name());
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                orders.add(mapResultSetToOrder(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orders;
+        return jdbcTemplate.query(sql, orderRowMapper(), status.name());
     }
 
     public List<Order> findByBuyerIdAndStatus(Long userId, OrderStatus status) {
-        List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders WHERE user_id = ? AND status = ?";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setLong(1, userId);
-            ps.setString(2, status.name());
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                orders.add(mapResultSetToOrder(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return orders;
+        return jdbcTemplate.query(sql, orderRowMapper(), userId, status.name());
     }
 
-    private Order mapResultSetToOrder(ResultSet rs) throws SQLException {
-        Order order = new Order();
-        order.setId(rs.getLong("id"));
-        order.setQuantity(rs.getInt("quantity"));
-        order.setStatus(OrderStatus.valueOf(rs.getString("status")));
-        order.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+    private RowMapper<Order> orderRowMapper() {
+        return (rs, rowNum) -> {
+            Order order = new Order();
+            order.setId(rs.getLong("id"));
+            order.setQuantity(rs.getInt("quantity"));
+            order.setStatus(OrderStatus.valueOf(rs.getString("status")));
+            order.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
 
-        User user = new User();
-        user.setId(rs.getLong("user_id"));
-        order.setBuyer(user);
+            User user = new User();
+            user.setId(rs.getLong("user_id"));
+            order.setBuyer(user);
 
-        Product product = new Product();
-        product.setId(rs.getLong("product_id"));
-        order.setProduct(product);
+            Product product = new Product();
+            product.setId(rs.getLong("product_id"));
+            order.setProduct(product);
 
-        return order;
+            return order;
+        };
     }
 }

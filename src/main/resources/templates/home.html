@@ -1,42 +1,69 @@
 <!DOCTYPE html>
 <html lang="uz" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Furni Tura - Tikuvchilik va Zamonaviy Zamoklar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/home.css">
-</head>
-<body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Furni Tura - Tikuvchilik materiallari, zamoklar va aksessuarlar bo'yicha yetakchi do'kon. Yuqori sifatli mahsulotlar va tez yetkazib berish.">
 
+    <title>Furni Tura - Tikuvchilik va Zamonaviy Zamoklar Do'koni</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+
+    <!-- Fontlar -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- CSS kutubxonalari -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+
+    <!-- Preload muhim resurslar -->
+    <link rel="preload" href="/static/images/hero-image.webp" as="image">
+</head>
+
+<body>
+<!-- Sarlavha bo'limi -->
 <header class="main-header">
     <div class="container">
-        <div class="logo">
-            <i class="fas fa-needle"></i>
+        <!-- Logo va brend nomi -->
+        <a href="/" class="logo" aria-label="Furni Tura bosh sahifasi">
+            <i class="material-icons" aria-hidden="true">content_cut</i>
             <span>Furni Tura</span>
-        </div>
+        </a>
 
+        <!-- Qidiruv paneli -->
         <div class="search-bar">
-            <input type="text" placeholder="Mahsulotlarni qidirish..." />
-            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <form role="search" aria-label="Sayt bo'ylab qidiruv">
+                <input type="search" placeholder="Mahsulotlarni qidirish..." aria-label="Qidiruv so'rovi">
+                <button type="submit" class="search-btn" aria-label="Qidiruvni boshlash">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
         </div>
 
-        <nav class="nav-icons">
-            <a th:href="@{/wishlist}" class="nav-icon">
+        <!-- Navigatsiya ikonalari -->
+        <nav class="nav-icons" aria-label="Foydalanuvchi navigatsiyasi">
+            <!-- Saralanganlar -->
+            <a th:href="@{/wishlist}" class="nav-icon" aria-label="Saralanganlar">
                 <i class="far fa-heart"></i>
-                <span>Saralangan</span>
+                <span class="sr-only">Saralanganlar</span>
+                <span class="badge wishlist-count">0</span>
             </a>
-            <a th:href="@{/cart}" class="nav-icon">
+
+            <!-- Savat -->
+            <a th:href="@{/cart}" class="nav-icon" aria-label="Savat">
                 <i class="fas fa-shopping-cart"></i>
-                <span>Savat</span>
-                <span class="cart-count">0</span>
+                <span class="sr-only">Savat</span>
+                <span class="badge cart-count">0</span>
             </a>
+
+            <!-- Foydalanuvchi menyusi -->
             <div class="user-dropdown">
-                <button class="user-btn">
+                <button class="user-btn" aria-expanded="false" aria-label="Foydalanuvchi menyusi">
                     <i class="far fa-user"></i>
                     <span>Hisobim</span>
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
                 </button>
                 <div class="dropdown-content">
                     <a th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Kirish</a>
@@ -48,181 +75,223 @@
     </div>
 </header>
 
+<!-- Asosiy kontent -->
 <main>
-    <section class="hero-section">
+    <!-- Hero bo'limi -->
+    <section class="hero-section" aria-labelledby="hero-heading">
         <div class="container">
             <div class="hero-content">
-                <h1>Tikuvchilik uchun barcha kerakli materiallar</h1>
+                <h1 id="hero-heading">Tikuvchilik uchun barcha kerakli materiallar</h1>
                 <p>Yuqori sifatli iplar, zamoklar, dazmollar va boshqa aksessuarlar</p>
                 <div class="hero-buttons">
-                    <a th:href="@{/products}" class="btn-primary">
+                    <a th:href="@{/products}" class="btn btn-primary">
                         <i class="fas fa-shopping-bag"></i> Hozir xarid qilish
                     </a>
-                    <a th:href="@{/collections}" class="btn-secondary">
+                    <a th:href="@{/collections}" class="btn btn-outline">
                         <i class="fas fa-eye"></i> Koleksiyalarni ko'rish
                     </a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1603262110263-fb0112e7cc33" alt="Tikuvchilik materiallari" />
+                <img src="/static/images/hero-image.webp" alt="Tikuvchilik materiallari" width="600" height="400" loading="eager">
             </div>
         </div>
     </section>
 
-    <section class="features-section">
-        <div class="container features-container">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
-                <h3>Tez yetkazib berish</h3>
-                <p>Buyurtmangiz 1-2 ish kuni ichida yetkazib beriladi</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-award"></i></div>
-                <h3>Yuqori sifat</h3>
-                <p>Barcha mahsulotlarimiz sifat va mustahkamlikka tekshirilgan</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                <h3>Mutaxassis yordami</h3>
-                <p>Tikuvchilik bo'yicha maslahat va qo'llab-quvvatlash</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-undo-alt"></i></div>
-                <h3>Qaytarib berish</h3>
-                <p>14 kun ichida mahsulotni qaytarish imkoniyati</p>
+    <!-- Afzalliklar bo'limi -->
+    <section class="features-section" aria-labelledby="features-heading">
+        <div class="container">
+            <h2 class="sr-only" id="features-heading">Bizning afzalliklarimiz</h2>
+            <div class="features-grid">
+                <!-- Tez yetkazib berish -->
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Tez yetkazib berish</h3>
+                    <p>Buyurtmangiz 1-2 ish kuni ichida yetkazib beriladi</p>
+                </div>
+
+                <!-- Yuqori sifat -->
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Yuqori sifat</h3>
+                    <p>Barcha mahsulotlarimiz sifat va mustahkamlikka tekshirilgan</p>
+                </div>
+
+                <!-- Mutaxassis yordami -->
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Mutaxassis yordami</h3>
+                    <p>Tikuvchilik bo'yicha maslahat va qo'llab-quvvatlash</p>
+                </div>
+
+                <!-- Qaytarib berish -->
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <h3>Qaytarib berish</h3>
+                    <p>14 kun ichida mahsulotni qaytarish imkoniyati</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="products-section">
+    <!-- Mashhur mahsulotlar -->
+    <section class="products-section" aria-labelledby="popular-products-heading">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Ko'p sotiladigan mahsulotlar</h2>
-                <a th:href="@{/products}" class="view-all">
+                <h2 id="popular-products-heading" class="section-title">Ko'p sotiladigan mahsulotlar</h2>
+                <a th:href="@{/products}" class="btn-link">
                     Hammasini ko'rish <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-            <div class="product-grid">
-                <div class="product-card">
+
+            <div class="products-grid">
+                <!-- Mahsulot 1: Premium tikuv ipi -->
+                <article class="product-card">
                     <div class="product-image">
-                        <img src="https://m.media-amazon.com/images/I/71YHh8XyJgL._AC_UF1000,1000_QL80_.jpg" alt="Tikuv ipi" />
+                        <img src="/static/images/thread.webp" alt="Premium tikuv ipi" width="300" height="300" loading="lazy">
                         <div class="product-actions">
-                            <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                            <button class="btn-icon wishlist-btn" aria-label="Saralanganlarga qo'shish">
                                 <i class="far fa-heart"></i>
                             </button>
-                            <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                            <button class="btn-icon quickview-btn" aria-label="Tezkor ko'rish">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
+                        <span class="product-badge">Yangi</span>
                     </div>
                     <div class="product-info">
-                        <h3>Premium tikuv ipi</h3>
+                        <h3><a href="/product/premium-thread">Premium tikuv ipi</a></h3>
                         <div class="product-price">
                             <span class="current-price">25,000 so'm</span>
+                            <span class="old-price">30,000 so'm</span>
                         </div>
-                        <button class="add-to-cart">
+                        <button class="btn btn-add-to-cart">
                             <i class="fas fa-cart-plus"></i> Savatga qo'shish
                         </button>
                     </div>
-                </div>
-                <div class="product-card">
+                </article>
+
+                <!-- Mahsulot 2: YKK metall zamok -->
+                <article class="product-card">
                     <div class="product-image">
-                        <img src="https://5.imimg.com/data5/SELLER/Default/2021/12/QO/YD/JA/3033603/zipper-ykk.jpg" alt="Zamok" />
+                        <img src="/static/images/zipper.webp" alt="YKK metall zamok" width="300" height="300" loading="lazy">
                         <div class="product-actions">
-                            <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                            <button class="btn-icon wishlist-btn" aria-label="Saralanganlarga qo'shish">
                                 <i class="far fa-heart"></i>
                             </button>
-                            <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                            <button class="btn-icon quickview-btn" aria-label="Tezkor ko'rish">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
                     <div class="product-info">
-                        <h3>YKK metall zamok</h3>
+                        <h3><a href="/product/ykk-zipper">YKK metall zamok</a></h3>
                         <div class="product-price">
                             <span class="current-price">15,000 so'm</span>
                         </div>
-                        <button class="add-to-cart">
+                        <button class="btn btn-add-to-cart">
                             <i class="fas fa-cart-plus"></i> Savatga qo'shish
                         </button>
                     </div>
-                </div>
-                <div class="product-card">
+                </article>
+
+                <!-- Mahsulot 3: Plastik dazmollar -->
+                <article class="product-card">
                     <div class="product-image">
-                        <img src="https://m.media-amazon.com/images/I/61iS6mLyURL._AC_UF1000,1000_QL80_.jpg" alt="Dazmol" />
+                        <img src="/static/images/buttons.webp" alt="Plastik dazmollar" width="300" height="300" loading="lazy">
                         <div class="product-actions">
-                            <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                            <button class="btn-icon wishlist-btn" aria-label="Saralanganlarga qo'shish">
                                 <i class="far fa-heart"></i>
                             </button>
-                            <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                            <button class="btn-icon quickview-btn" aria-label="Tezkor ko'rish">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
+                        <span class="product-badge">Chegirma</span>
                     </div>
                     <div class="product-info">
-                        <h3>Plastik dazmollar</h3>
+                        <h3><a href="/product/plastic-buttons">Plastik dazmollar</a></h3>
                         <div class="product-price">
                             <span class="current-price">8,000 so'm</span>
+                            <span class="old-price">12,000 so'm</span>
                         </div>
-                        <button class="add-to-cart">
+                        <button class="btn btn-add-to-cart">
                             <i class="fas fa-cart-plus"></i> Savatga qo'shish
                         </button>
                     </div>
-                </div>
-                <div class="product-card">
+                </article>
+
+                <!-- Mahsulot 4: Tikuvchilik to'plami -->
+                <article class="product-card">
                     <div class="product-image">
-                        <img src="https://m.media-amazon.com/images/I/71tGpY9nVVL._AC_UF1000,1000_QL80_.jpg" alt="Tikuv to'plami" />
+                        <img src="/static/images/sewing-kit.webp" alt="Tikuvchilik to'plami" width="300" height="300" loading="lazy">
                         <div class="product-actions">
-                            <button class="action-btn wishlist-btn" title="Saralanganlarga qo'shish">
+                            <button class="btn-icon wishlist-btn" aria-label="Saralanganlarga qo'shish">
                                 <i class="far fa-heart"></i>
                             </button>
-                            <button class="action-btn quickview-btn" title="Tezkor ko'rish">
+                            <button class="btn-icon quickview-btn" aria-label="Tezkor ko'rish">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
                     <div class="product-info">
-                        <h3>Tikuvchilik to'plami</h3>
+                        <h3><a href="/product/sewing-kit">Tikuvchilik to'plami</a></h3>
                         <div class="product-price">
                             <span class="current-price">120,000 so'm</span>
                         </div>
-                        <button class="add-to-cart">
+                        <button class="btn btn-add-to-cart">
                             <i class="fas fa-cart-plus"></i> Savatga qo'shish
                         </button>
                     </div>
-                </div>
+                </article>
             </div>
         </div>
     </section>
 
-    <section class="categories-section">
+    <!-- Kategoriyalar bo'limi -->
+    <section class="categories-section" aria-labelledby="categories-heading">
         <div class="container">
-            <h2 class="section-title">Kategoriyalar</h2>
-            <div class="category-grid">
-                <a th:href="@{/category/threads}" class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-thread"></i>
+            <h2 id="categories-heading" class="section-title">Kategoriyalar</h2>
+            <div class="categories-grid">
+                <!-- Tikuv iplari -->
+                <a th:href="@{/category/threads}" class="category-card" aria-label="Tikuv iplari">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="material-icons">layers</i>
                     </div>
                     <h3>Tikuv iplari</h3>
                     <p>50+ mahsulot</p>
                 </a>
-                <a th:href="@{/category/zippers}" class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-zipper"></i>
+
+                <!-- Zamoklar -->
+                <a th:href="@{/category/zippers}" class="category-card" aria-label="Zamoklar">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="material-icons">call_to_action</i>
                     </div>
                     <h3>Zamoklar</h3>
                     <p>35+ mahsulot</p>
                 </a>
-                <a th:href="@{/category/buttons}" class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-toggle-off"></i>
+
+                <!-- Tugmalar -->
+                <a th:href="@{/category/buttons}" class="category-card" aria-label="Tugmalar">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="material-icons">radio_button_checked</i>
                     </div>
                     <h3>Tugmalar</h3>
                     <p>40+ mahsulot</p>
                 </a>
-                <a th:href="@{/category/accessories}" class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-vest"></i>
+
+                <!-- Aksessuarlar -->
+                <a th:href="@{/category/accessories}" class="category-card" aria-label="Aksessuarlar">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="material-icons">checkroom</i>
                     </div>
                     <h3>Aksessuarlar</h3>
                     <p>25+ mahsulot</p>
@@ -231,84 +300,93 @@
         </div>
     </section>
 
-    <section class="banner-section">
+    <!-- Banner bo'limi -->
+    <section class="banner-section" aria-labelledby="banner-heading">
         <div class="container">
             <div class="banner-content">
-                <h2>Yangi kelgan mahsulotlar</h2>
+                <h2 id="banner-heading">Yangi kelgan mahsulotlar</h2>
                 <p>Zamonaviy dizayndagi zamoklar va aksessuarlar</p>
-                <a th:href="@{/new-arrivals}" class="btn-primary">
+                <a th:href="@{/new-arrivals}" class="btn btn-primary">
                     <i class="fas fa-star"></i> Yangiliklarni ko'rish
                 </a>
             </div>
         </div>
     </section>
 
-    <section class="testimonials-section">
+    <!-- Sharhlar bo'limi -->
+    <section class="testimonials-section" aria-labelledby="testimonials-heading">
         <div class="container">
-            <h2 class="section-title">Mijozlarimiz fikrlari</h2>
+            <h2 id="testimonials-heading" class="section-title">Mijozlarimiz fikrlari</h2>
             <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                <!-- Sharh 1 -->
+                <article class="testimonial-card">
+                    <div class="testimonial-rating" aria-label="5 yulduzdan 5">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
                     </div>
-                    <p class="testimonial-text">
+                    <blockquote class="testimonial-text">
                         "Furni Tura'dan tikuv ipi va zamok sotib oldim. Juda sifatli mahsulotlar. Yetkazib berish ham juda tez bo'ldi."
-                    </p>
+                    </blockquote>
                     <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Dilfuza Rahimova" />
+                        <img src="/static/images/user-1.webp" alt="Dilfuza Rahimova" width="60" height="60" loading="lazy">
                         <div>
                             <h4>Dilfuza Rahimova</h4>
                             <span>Toshkent</span>
                         </div>
                     </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
+                </article>
+
+                <!-- Sharh 2 -->
+                <article class="testimonial-card">
+                    <div class="testimonial-rating" aria-label="5 yulduzdan 4.5">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <i class="fas fa-star-half-alt" aria-hidden="true"></i>
                     </div>
-                    <p class="testimonial-text">
+                    <blockquote class="testimonial-text">
                         "Tikuvchilik to'plami juda qulay va barcha kerakli narsalar bor. Xarid qilganimdan xursandman."
-                    </p>
+                    </blockquote>
                     <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Javlon Sobirov" />
+                        <img src="/static/images/user-2.webp" alt="Javlon Sobirov" width="60" height="60" loading="lazy">
                         <div>
                             <h4>Javlon Sobirov</h4>
                             <span>Samarqand</span>
                         </div>
                     </div>
-                </div>
+                </article>
             </div>
         </div>
     </section>
 </main>
 
-<footer class="main-footer">
-    <div class="container footer-container">
-        <div class="footer-column">
-            <div class="footer-logo">
-                <i class="fas fa-needle"></i>
+<!-- Footer bo'limi -->
+<footer class="main-footer" aria-labelledby="footer-heading">
+    <div class="container footer-grid">
+        <!-- Brend haqida -->
+        <div class="footer-col footer-about">
+            <h3 id="footer-heading" class="footer-logo">
+                <i class="material-icons" aria-hidden="true">content_cut</i>
                 <span>Furni Tura</span>
-            </div>
-            <p class="footer-about">
-                Furni Tura - tikuvchilik va tikuv aksessuarlari bo'yicha yetakchi do'kon. Biz mijozlarimizga eng yaxshi sifatli mahsulotlarni taklif qilamiz.
+            </h3>
+            <p>
+                Furni Tura - tikuvchilik va tikuv aksessuarlari bo'yicha yetakchi do'kon.
+                Biz mijozlarimizga eng yaxshi sifatli mahsulotlarni taklif qilamiz.
             </p>
             <div class="footer-social">
-                <a href="#"><i class="fab fa-telegram"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/furnitura" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="https://instagram.com/furnitura" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com/furnitura" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://youtube.com/furnitura" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
             </div>
         </div>
 
-        <div class="footer-column">
+        <!-- Sayt xaritasi -->
+        <div class="footer-col">
             <h4 class="footer-title">Ma'lumot</h4>
             <ul class="footer-links">
                 <li><a th:href="@{/about}"><i class="fas fa-chevron-right"></i> Biz haqimizda</a></li>
@@ -319,7 +397,8 @@
             </ul>
         </div>
 
-        <div class="footer-column">
+        <!-- Mijozlar uchun -->
+        <div class="footer-col">
             <h4 class="footer-title">Mijozlar uchun</h4>
             <ul class="footer-links">
                 <li><a th:href="@{/account}"><i class="fas fa-chevron-right"></i> Mening hisobim</a></li>
@@ -330,43 +409,59 @@
             </ul>
         </div>
 
-        <div class="footer-column">
+        <!-- Aloqa ma'lumotlari -->
+        <div class="footer-col">
             <h4 class="footer-title">Aloqa</h4>
-            <ul class="footer-contact">
-                <li>
-                    <i class="fas fa-map-marker-alt"></i>
+            <address class="footer-contact">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                     <span>Toshkent shahar, Yunusobod tumani, Navoiy ko'chasi 45</span>
-                </li>
-                <li>
-                    <i class="fas fa-phone-alt"></i>
-                    <span>+998 95 195 00 94</span>
-                </li>
-                <li>
-                    <i class="fas fa-envelope"></i>
-                    <span>support@furnitura.uz</span>
-                </li>
-                <li>
-                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                    <a href="tel:+998951950094">+998 95 195 00 94</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <a href="mailto:support@furnitura.uz">support@furnitura.uz</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
                     <span>Dushanba - Juma, 9:00 - 18:00</span>
-                </li>
-            </ul>
+                </div>
+            </address>
         </div>
     </div>
 
+    <!-- Footer pastki qismi -->
     <div class="footer-bottom">
         <div class="container">
-            <p>&copy; 2023 Furni Tura. Barcha huquqlar himoyalangan.</p>
-            <div class="payment-methods">
-                <i class="fab fa-cc-visa"></i>
-                <i class="fab fa-cc-mastercard"></i>
-                <i class="fab fa-cc-paypal"></i>
-                <i class="fas fa-money-bill-wave"></i>
+            <p>&copy; <span id="current-year">2023</span> Furni Tura. Barcha huquqlar himoyalangan.</p>
+            <div class="payment-methods" aria-label="To'lov usullari">
+                <i class="fab fa-cc-visa" aria-hidden="true"></i>
+                <i class="fab fa-cc-mastercard" aria-hidden="true"></i>
+                <i class="fab fa-cc-paypal" aria-hidden="true"></i>
+                <i class="fas fa-money-bill-wave" aria-hidden="true"></i>
             </div>
         </div>
     </div>
 </footer>
 
-<script src="/static/js/home.js"></script>
+<!-- JavaScript fayllari -->
+<script src="/static/js/home.js" defer></script>
 
+<!-- Inline JavaScript (yengil funksiyalar) -->
+<script>
+    // Joriy yilni avtomatik yangilash
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // User dropdown funksiyasi
+    document.querySelector('.user-btn').addEventListener('click', function() {
+        const dropdown = this.closest('.user-dropdown');
+        dropdown.classList.toggle('active');
+        const isExpanded = dropdown.classList.contains('active');
+        this.setAttribute('aria-expanded', isExpanded);
+    });
+</script>
 </body>
 </html>
